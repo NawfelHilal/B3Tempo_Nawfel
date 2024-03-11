@@ -1,0 +1,10 @@
+<resources>
+
+    <style name="Widget.Theme.B3Tempo_Nawfel.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="captionTextColor">@color/black</item>
+        <item name="captionTextSize">@dimen/tempo_color_view_text_size</item>
+        <item name="captionText">@string/not_set</item>
+        <item name="dayCircleColor">@color/black</item>
+    </style>
+</resources>

@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="Widget.Theme.B3Tempo_Nawfel.MyView" parent="">
+        <item name="android:background">@color/gray_600</item>
+        <item name="captionTextColor">@color/light_blue_600</item>
+    </style>
+</resources>
