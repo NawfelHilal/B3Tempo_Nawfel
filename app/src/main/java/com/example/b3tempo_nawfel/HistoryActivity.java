@@ -7,6 +7,7 @@ import static com.example.b3tempo_nawfel.MainActivity.edfApi;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class HistoryActivity extends AppCompatActivity {
         //init recycler view
         binding.tempoHistoryRv.setHasFixedSize(true);
         binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this));
+        binding.tempoHistoryRv.setAdapter(new TempoDateAdapter(tempoDates));
 
         updateTempoHistory();
     }
