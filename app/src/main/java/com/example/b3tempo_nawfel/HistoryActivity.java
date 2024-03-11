@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.b3tempo_nawfel.databinding.ActivityHistoryBinding;
 
@@ -30,6 +31,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     List<TempoDate> tempoDates = new ArrayList<>();
 
+    TempoDateAdapter tempoDateAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +42,15 @@ public class HistoryActivity extends AppCompatActivity {
         //init recycler view
         binding.tempoHistoryRv.setHasFixedSize(true);
         binding.tempoHistoryRv.setLayoutManager(new LinearLayoutManager(this));
-        binding.tempoHistoryRv.setAdapter(new TempoDateAdapter(tempoDates));
+        tempoDateAdapter = new TempoDateAdapter(tempoDates, this);
+        binding.tempoHistoryRv.setAdapter(tempoDateAdapter);
 
         updateTempoHistory();
     }
 
     private void updateTempoHistory() {
         Call<TempoHistory> call = edfApi.getTempoHistory("2023","2024");
+        binding.tempoHistoryPb.setVisibility(View.VISIBLE);
 
         call.enqueue(new Callback<TempoHistory>() {
 
@@ -56,14 +61,18 @@ public class HistoryActivity extends AppCompatActivity {
                 if (response.code() == HttpURLConnection.HTTP_OK && tempoHistory != null) {
                     tempoDates.addAll(response.body().getDates());
                     Log.d(LOG_TAG,"nb element = " + tempoDates.size());
+                    tempoDateAdapter.notifyDataSetChanged();
+
                 } else {
                     Log.w(LOG_TAG, "call to getTempoHistory() failed with error code " + response.code());
                 }
+                binding.tempoHistoryPb.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(@NonNull Call<TempoHistory> call, @NonNull Throwable t) {
                 Log.e(LOG_TAG, "call to getTempoHistory() failed ");
+                binding.tempoHistoryPb.setVisibility(View.GONE);
             }
         });
     }
